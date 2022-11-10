@@ -6,39 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Nam mô Adidas Phật"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:textColor="#AE5D4A"
+            android:textSize="24sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:textColor="#AE5D4A"
+            android:textSize="40sp"
+            android:textStyle="bold">
+        </TextView>
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/img_phat_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@drawable/phatto"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar">
 
     </ImageView>
-
-    <TextView
-        android:id="@+id/tv_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="0"
-        android:textColor="#AE5D4A"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
 
     <ImageView
         android:id="@+id/img_go_mo"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:src="@drawable/mo"
         app:layout_constraintWidth_default="percent"
@@ -54,7 +76,7 @@
         android:layout_height="100dp"
         android:src="@drawable/chuong"
         android:adjustViewBounds="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
