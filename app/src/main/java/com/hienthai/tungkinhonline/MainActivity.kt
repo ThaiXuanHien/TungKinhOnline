@@ -3,8 +3,7 @@ package com.hienthai.tungkinhonline
 import android.content.ContentResolver
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -26,97 +25,73 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val exoPlayer1 = ExoPlayer.Builder(applicationContext).build().apply {
-            playWhenReady = true
-            volume = 0.3f
-        }
-        val mediaItem1: MediaItem = MediaItem.Builder()
-            .setUri(
-                Uri.parse(
-                    ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            File.pathSeparator +
-                            File.separator +
-                            File.separator +
-                            applicationContext.packageName +
-                            File.separator +
-                            R.raw.samhoi
-                )
-            )
-            .setMimeType(MimeTypes.AUDIO_WAV)
-            .build()
-
+        val exoPlayer1 = initExo(0.5f)
+        val mediaItem1 = initMediaItem(R.raw.samhoi)
         exoPlayer1.setMediaItem(mediaItem1)
         exoPlayer1.prepare()
 
 
-        val exoPlayer2 = ExoPlayer.Builder(applicationContext).build().apply {
-            playWhenReady = true
-            volume = 1.0f
-        }
+        val exoPlayer2 = initExo(1.0f)
+        val mediaItem2 = initMediaItem(R.raw.gomo)
 
-        val mediaItem2: MediaItem = MediaItem.Builder()
-            .setUri(
-                Uri.parse(
-                    ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            File.pathSeparator +
-                            File.separator +
-                            File.separator +
-                            applicationContext.packageName +
-                            File.separator +
-                            R.raw.gomo
-                )
-            )
-            .setMimeType(MimeTypes.AUDIO_WAV)
-            .build()
-
-        val exoPlayer3 = ExoPlayer.Builder(applicationContext).build().apply {
-            playWhenReady = true
-            volume = 0.3f
-        }
-        val mediaItem3: MediaItem = MediaItem.Builder()
-            .setUri(
-                Uri.parse(
-                    ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            File.pathSeparator +
-                            File.separator +
-                            File.separator +
-                            applicationContext.packageName +
-                            File.separator +
-                            R.raw.chuong
-                )
-            )
-            .setMimeType(MimeTypes.AUDIO_WAV)
-            .build()
-
+        val exoPlayer3 = initExo(1.0f)
+        val mediaItem3 = initMediaItem(R.raw.chuong)
 
         var i = 0
-        binding.imgGoMo.setOnClickListener {
-
-            exoPlayer2.setMediaItem(mediaItem2)
-            exoPlayer2.prepare()
-
+        binding.imgGoMo.setSafeClickListener {
             binding.tvCount.text = "${++i}"
-
             if (i == 1000) {
                 Toast.makeText(this, "Chúc mừng bạn đã chính quả", Toast.LENGTH_SHORT).show()
             }
-
-            YoYo.with(Techniques.Pulse)
-                .duration(200)
-                .playOn(it)
+            startAudioAnimation(exoPlayer2, mediaItem2, it, Techniques.Pulse, 200)
         }
 
-        binding.imgGoChuong.setOnClickListener {
-
-            exoPlayer3.setMediaItem(mediaItem3)
-            exoPlayer3.prepare()
-
-            YoYo.with(Techniques.Swing)
-                .duration(100)
-                .playOn(it)
+        binding.imgGoChuong.setSafeClickListener(interval = 10000) {
+            startAudioAnimation(exoPlayer3, mediaItem3, it, Techniques.Swing, 100)
         }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun startAudioAnimation(
+        exoPlayer: ExoPlayer,
+        mediaItem: MediaItem,
+        view: View,
+        animation: Techniques,
+        duration: Long
+    ) {
+        exoPlayer.setMediaItem(mediaItem)
+        exoPlayer.prepare()
+
+        YoYo.with(animation)
+            .duration(duration)
+            .playOn(view)
+    }
+
+    private fun initExo(duration: Float): ExoPlayer {
+        val exoPlayer = ExoPlayer.Builder(applicationContext).build().apply {
+            playWhenReady = true
+            volume = duration
+        }
+
+        return exoPlayer
+    }
+
+    private fun initMediaItem(raw: Int): MediaItem {
+        return MediaItem.Builder()
+            .setUri(
+                Uri.parse(
+                    ContentResolver.SCHEME_ANDROID_RESOURCE +
+                            File.pathSeparator +
+                            File.separator +
+                            File.separator +
+                            applicationContext.packageName +
+                            File.separator +
+                            raw
+                )
+            )
+            .setMimeType(MimeTypes.AUDIO_WAV)
+            .build()
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
