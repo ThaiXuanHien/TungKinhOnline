@@ -15,20 +15,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Nam mô Adidas Phật"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:layout_alignParentStart="true"
-            android:textColor="#AE5D4A"
-            android:textSize="24sp"
-            android:textStyle="bold">
-        </TextView>
-
-        <TextView
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

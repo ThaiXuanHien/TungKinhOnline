@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.hienthai.tungkinhonline'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.hienthai.tungkinhonline"
         minSdk 28
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -50,4 +50,9 @@ dependencies {
 
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+
+    // DI
+    implementation 'io.insert-koin:koin-android:3.3.2'
 }

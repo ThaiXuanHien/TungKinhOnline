@@ -13,22 +13,23 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.util.MimeTypes
 import com.hienthai.tungkinhonline.databinding.ActivityMainBinding
+import org.koin.android.ext.android.inject
 import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    private val prefs: AppPrefs by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val exoPlayer1 = initExo(0.5f)
-        val mediaItem1 = initMediaItem(R.raw.samhoi)
-        exoPlayer1.setMediaItem(mediaItem1)
-        exoPlayer1.prepare()
+//        val exoPlayer1 = initExo(0.5f)
+//        val mediaItem1 = initMediaItem(R.raw.samhoi)
+//        exoPlayer1.setMediaItem(mediaItem1)
+//        exoPlayer1.prepare()
 
 
         val exoPlayer2 = initExo(1.0f)
@@ -37,13 +38,13 @@ class MainActivity : AppCompatActivity() {
         val exoPlayer3 = initExo(1.0f)
         val mediaItem3 = initMediaItem(R.raw.chuong)
 
-        var i = 0
+        binding.tvCount.text = prefs.count.toString()
+
         binding.imgGoMo.setSafeClickListener {
-            binding.tvCount.text = "${++i}"
-            if (i == 1000) {
-                Toast.makeText(this, "Chúc mừng bạn đã chính quả", Toast.LENGTH_SHORT).show()
-            }
+            prefs.count = ++prefs.count
+            binding.tvCount.text = "${prefs.count}"
             startAudioAnimation(exoPlayer2, mediaItem2, it, Techniques.Pulse, 200)
+
         }
 
         binding.imgGoChuong.setSafeClickListener(interval = 10000) {
