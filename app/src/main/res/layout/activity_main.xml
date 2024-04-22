@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -15,20 +15,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="0"
             android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_alignParentEnd="true"
+            android:text="0"
             android:textColor="#AE5D4A"
             android:textSize="40sp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/img_more" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/img_more"
+            android:src="@drawable/ic_more"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/img_phat_to"

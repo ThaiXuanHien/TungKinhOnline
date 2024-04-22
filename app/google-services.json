@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "800001845429",
+    "project_id": "tungkinhonline",
+    "storage_bucket": "tungkinhonline.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800001845429:android:8450e17a57b4d3acc976fc",
+        "android_client_info": {
+          "package_name": "com.hienthai.tungkinhonline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDVptq20cqav1y0vSKeTrU_g-nWOixW30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
