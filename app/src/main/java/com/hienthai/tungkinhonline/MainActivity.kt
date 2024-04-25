@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         binding.imgGoMo.setSafeClickListener {
             prefs.count = ++prefs.count
             binding.tvCount.text = "${prefs.count}"
-            Log.e("Hien", "onCreate: ${intent.getStringExtra("USER_ID") ?: ""}")
             databaseReference.child(intent.getStringExtra("USER_ID") ?: "").child("count").setValue(prefs.count)
             startAudioAnimation(exoPlayer2, mediaItem2, it, Techniques.Pulse, 200)
 
@@ -78,7 +77,6 @@ class MainActivity : AppCompatActivity() {
     private fun initMenu() {
         powerMenu = PowerMenu.Builder(this)
             .addItem(PowerMenuItem("Xếp hạng"))
-            .addItem(PowerMenuItem("Xóa tài khoản"))
             .addItem(PowerMenuItem("Đăng xuất"))
             .setMenuRadius(10f)
             .setMenuShadow(10f)
@@ -96,6 +94,11 @@ class MainActivity : AppCompatActivity() {
             when(position) {
                 0 -> {
                     startActivity(Intent(this@MainActivity, RankActivity::class.java))
+                }
+                1 -> {
+                    startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                    prefs.clear()
+                    finish()
                 }
             }
             powerMenu.dismiss()
