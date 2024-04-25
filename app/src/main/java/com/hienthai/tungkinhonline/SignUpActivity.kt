@@ -1,0 +1,84 @@
+package com.hienthai.tungkinhonline
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.hienthai.tungkinhonline.databinding.ActivitySignupBinding
+import org.koin.android.ext.android.inject
+
+class SignUpActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySignupBinding
+    private val prefs: AppPrefs by inject()
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivitySignupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseReference = firebaseDatabase.reference.child("users")
+
+        binding.btnSignUp.setSafeClickListener {
+            val username = binding.edtUsername.text.toString()
+            val password = binding.edtPassword.text.toString()
+            val rePassword = binding.edtRePassword.text.toString()
+
+            if (username.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
+                if (password == rePassword) {
+                    binding.pbLoading.isInvisible = false
+                    databaseReference.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                binding.pbLoading.isInvisible = true
+                                val id = databaseReference.push().key
+                                val user = User(id, username, password, 0)
+                                databaseReference.child(id ?: "").setValue(user)
+                                prefs.id = id ?: ""
+                                val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                binding.pbLoading.isInvisible = true
+                                Toast.makeText(this@SignUpActivity, "Người dùng đã tồn tại", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onCancelled(p0: DatabaseError) {
+                            binding.pbLoading.isInvisible = true
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Database Error: ${p0.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        
+                    })
+
+                } else {
+                    Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.tvBackSignIn.setOnClickListener {
+            finish()
+        }
+
+        binding.root.setOnClickListener {
+            hideKeyboard()
+        }
+
+    }
+}

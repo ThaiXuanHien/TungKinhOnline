@@ -1,9 +1,11 @@
 package com.hienthai.tungkinhonline
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.SystemClock
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 fun Context.showAlertDialog(
     title: String? = null,
@@ -52,4 +54,9 @@ inline fun View.setSafeClickListener(interval: Int = 500, crossinline onSafeClic
             onSafeClick(v)
         }
     })
+}
+
+fun Activity.hideKeyboard() {
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 }
