@@ -72,5 +72,5 @@ inline fun <reified T> SharedPreferences.setSharedValue(key: String, value: T) {
         }
     }
 
-    editor.apply()
+    editor.commit()
 }
