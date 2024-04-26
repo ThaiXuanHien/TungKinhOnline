@@ -24,6 +24,7 @@ import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
 import org.koin.android.ext.android.inject
 import java.io.File
+import java.util.Locale
 import kotlin.math.log
 
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -76,8 +78,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initMenu() {
         powerMenu = PowerMenu.Builder(this)
-            .addItem(PowerMenuItem("Xếp hạng"))
-            .addItem(PowerMenuItem("Đăng xuất"))
+            .addItem(PowerMenuItem(getString(R.string.text_rank)))
+            .addItem(PowerMenuItem(getString(R.string.text_log_out)))
             .setMenuRadius(10f)
             .setMenuShadow(10f)
             .setTextGravity(Gravity.CENTER)
@@ -149,9 +151,9 @@ class MainActivity : AppCompatActivity() {
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             showAlertDialog(
-                msg = "Bạn chưa Chính Quả, bạn có muốn tiếp tục Tu ko?",
-                positiveButton = "Xuống núi",
-                negativeButton = "Tu tiếp",
+                msg = getString(R.string.text_question_out),
+                positiveButton = getString(R.string.text_down_the_mountain),
+                negativeButton = getString(R.string.text_continue_practicing),
                 onPositiveButtonClick = {
                     finish()
                 }, onNegativeButtonClick = {})

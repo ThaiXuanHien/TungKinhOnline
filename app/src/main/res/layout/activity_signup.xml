@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng ký"
+        android:text="@string/text_sign_up"
         android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -37,7 +37,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_username"
                 android:textColor="@color/black"
-                android:hint="Tên khoản"
+                android:hint="@string/text_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -55,7 +55,7 @@
                 android:inputType="textPassword"
                 android:id="@+id/edt_password"
                 android:textColor="@color/black"
-                android:hint="Mật khẩu"
+                android:hint="@string/text_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -73,7 +73,7 @@
                 android:inputType="textPassword"
                 android:id="@+id/edt_re_password"
                 android:textColor="@color/black"
-                android:hint="Nhập lại mật khẩu"
+                android:hint="@string/text_re_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -88,26 +88,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Đăng ký"
+        android:text="@string/text_sign_up"
         android:paddingVertical="16dp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/pb_loading">
 
     </Button>
-
-    <TextView
-        android:id="@+id/tv_back_sign_in"
-        android:padding="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đã đăng ký , Đăng nhập!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sign_up">
-
-    </TextView>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pb_loading"
