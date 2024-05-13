@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
+import android.os.LocaleList
 import android.util.DisplayMetrics
 import android.util.Log
 import com.google.firebase.FirebaseApp
@@ -29,11 +30,13 @@ class MyApplication : Application() {
             modules(appModule)
         }
 
-        Log.e("Hien", "onCreate: ${Locale.getDefault().language}", )
         LocaleManager.initialize(this, prefs)
-        if (Locale.getDefault().language != "vi-VN") {
-            LocaleManager.getInstance().setLocale(this, "en-US")
-            prefs.language = "en-US"
+        if (Resources.getSystem().configuration.getLocales().get(0).language.equals("vi")) {
+            LocaleManager.getInstance().setLocale(this, "vi_VN")
+            prefs.language = "vi_VN"
+        } else {
+            LocaleManager.getInstance().setLocale(this, "en_US")
+            prefs.language = "en_US"
         }
     }
 }
