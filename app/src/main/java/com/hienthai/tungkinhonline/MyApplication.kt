@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.LocaleList
 import android.util.DisplayMetrics
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.FirebaseApp
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -21,7 +22,7 @@ class MyApplication : Application() {
     private val prefs: AppPrefs by inject()
     override fun onCreate() {
         super.onCreate()
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         FirebaseApp.initializeApp(this)
 
         startKoin {
