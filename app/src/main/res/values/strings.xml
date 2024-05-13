@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">TungKinhOnline</string>
+    <string name="text_rank">Xếp hạng</string>
+    <string name="text_number">STT</string>
+    <string name="text_username">Tài khoản</string>
+    <string name="text_count">Số lần gõ mõ</string>
+    <string name="text_sign_in">Đăng nhập</string>
+    <string name="text_password">Mật khẩu</string>
+    <string name="text_remember">Nhớ tài khoản</string>
+    <string name="text_sign_up">Đăng ký</string>
+    <string name="text_re_password">Nhập lại mật khẩu</string>
+    <string name="text_log_out">Đăng xuất</string>
+    <string name="text_question_out">Bạn chưa thành Phật, bạn có muốn tiếp tục Tu ko?</string>
+    <string name="text_down_the_mountain">Xuống núi</string>
+    <string name="text_continue_practicing">Tu tiếp</string>
+    <string name="text_username_or_password_incorrect">Tài khoản hoặc Mật khẩu không chính xác!</string>
+    <string name="text_cannot_be_left_blank">không được để trống</string>
+    <string name="text_user_exists">Người dùng tồn tại</string>
+    <string name="text_password_do_not_match">Mật khẩu không trùng khớp</string>
 </resources>

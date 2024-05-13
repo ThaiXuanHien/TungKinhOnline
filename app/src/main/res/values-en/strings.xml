@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_rank">Rank</string>
+    <string name="text_number">Number</string>
+    <string name="text_username">Username</string>
+    <string name="text_count">Count</string>
+    <string name="text_sign_in">Sign In</string>
+    <string name="text_password">Password</string>
+    <string name="text_remember">Remember</string>
+    <string name="text_sign_up">Sign Up</string>
+    <string name="text_re_password">Re Type Password</string>
+    <string name="text_log_out">Logout</string>
+    <string name="text_question_out">You haven\'t become a Buddha yet, do you want to continue practicing?</string>
+    <string name="text_down_the_mountain">Down the mountain</string>
+    <string name="text_continue_practicing">Continue practicing</string>
+    <string name="text_username_or_password_incorrect">Username or Password is incorrect!</string>
+    <string name="text_cannot_be_left_blank">cannot be left blank</string>
+    <string name="text_user_exists">User exists</string>
+    <string name="text_password_do_not_match">Passwords do not match</string>
+</resources>

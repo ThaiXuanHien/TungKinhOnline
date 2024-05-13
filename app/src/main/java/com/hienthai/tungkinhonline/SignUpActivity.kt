@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivitySignupBinding
 import org.koin.android.ext.android.inject
+import java.util.Locale
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -49,7 +50,7 @@ class SignUpActivity : AppCompatActivity() {
                                 finish()
                             } else {
                                 binding.pbLoading.isInvisible = true
-                                Toast.makeText(this@SignUpActivity, "Người dùng đã tồn tại", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@SignUpActivity, getString(R.string.text_user_exists), Toast.LENGTH_SHORT).show()
                             }
                         }
 
@@ -65,15 +66,11 @@ class SignUpActivity : AppCompatActivity() {
                     })
 
                 } else {
-                    Toast.makeText(this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.text_password_do_not_match), Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.text_cannot_be_left_blank), Toast.LENGTH_SHORT).show()
             }
-        }
-
-        binding.tvBackSignIn.setOnClickListener {
-            finish()
         }
 
         binding.root.setOnClickListener {

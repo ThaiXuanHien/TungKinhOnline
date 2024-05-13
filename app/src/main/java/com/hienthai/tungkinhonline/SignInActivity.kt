@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivitySignInBinding
 import org.koin.android.ext.android.inject
+import java.util.Locale
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
@@ -21,6 +22,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -57,7 +59,7 @@ class SignInActivity : AppCompatActivity() {
                             }
                         }
                         binding.pbLoading.isInvisible = true
-                        Toast.makeText(this@SignInActivity, "Tài khoản hoặc Mật khẩu không chính xác!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignInActivity, getString(R.string.text_username_or_password_incorrect), Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onCancelled(p0: DatabaseError) {
@@ -72,7 +74,7 @@ class SignInActivity : AppCompatActivity() {
                 })
 
             } else {
-                Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.text_cannot_be_left_blank), Toast.LENGTH_SHORT).show()
             }
         }
 
