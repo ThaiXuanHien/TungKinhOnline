@@ -12,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivitySignInBinding
 import org.koin.android.ext.android.inject
-import java.util.Locale
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
