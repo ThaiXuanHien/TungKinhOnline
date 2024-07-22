@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace 'com.hienthai.tungkinhonline'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.hienthai.tungkinhonline"
         minSdk 28
-        targetSdk 33
-        versionCode 6
-        versionName "1.5"
+        targetSdk 34
+        versionCode 7
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

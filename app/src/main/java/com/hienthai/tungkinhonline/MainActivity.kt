@@ -5,10 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.daimajia.androidanimations.library.Techniques
@@ -24,8 +22,6 @@ import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
 import org.koin.android.ext.android.inject
 import java.io.File
-import java.util.Locale
-import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
