@@ -17,4 +17,7 @@
     <string name="text_cannot_be_left_blank">cannot be left blank</string>
     <string name="text_user_exists">User exists</string>
     <string name="text_password_do_not_match">Passwords do not match</string>
+    <string name="text_content_logout">Logging out will lose all points.</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_deny">Cancel</string>
 </resources>

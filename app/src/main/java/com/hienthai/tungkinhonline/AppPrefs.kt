@@ -11,6 +11,10 @@ class AppPrefs(context: Context) {
     var language: String by prefs.preferences("language", "vi_VN")
 
     fun clear() {
-        prefs.edit().clear().apply()
+        prefs.edit()
+            .remove("count")
+            .remove("remember")
+            .remove("id")
+            .apply()
     }
 }
