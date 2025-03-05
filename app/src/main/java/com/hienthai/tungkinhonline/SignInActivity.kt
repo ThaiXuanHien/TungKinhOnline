@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -85,15 +86,20 @@ class SignInActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        binding.ctAutoLogin.isVisible = true
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.hasChild(prefs.id)) {
+                    binding.pbLoadingAutoLogin.isVisible = false
                     return
                 } else {
                     if (prefs.remember) {
+                        binding.ctAutoLogin.isVisible = false
                         startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                             putExtra("USER_ID", prefs.id)
                         })
+                    } else {
+                        binding.ctAutoLogin.isVisible = false
                     }
                 }
             }

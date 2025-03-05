@@ -94,9 +94,15 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this@MainActivity, RankActivity::class.java))
                 }
                 1 -> {
-                    startActivity(Intent(this@MainActivity, SignInActivity::class.java))
-                    prefs.clear()
-                    finish()
+                    showAlertDialog(
+                        msg = getString(R.string.text_content_logout),
+                        positiveButton = getString(R.string.text_accept),
+                        negativeButton = getString(R.string.text_deny),
+                        onPositiveButtonClick = {
+                            startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                            prefs.clear()
+                            finish()
+                        }, onNegativeButtonClick = {})
                 }
             }
             powerMenu.dismiss()
