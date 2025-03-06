@@ -35,6 +35,7 @@ class RankViewHolder(
                 tvCount.setTextColor(ContextCompat.getColor(tvUsername.context, R.color.black))
             }
 
+            tvTextRank.text = tvTextRank.context.getString(Rank.getRank(item.count ?: 0L))
         }
     }
     companion object {
