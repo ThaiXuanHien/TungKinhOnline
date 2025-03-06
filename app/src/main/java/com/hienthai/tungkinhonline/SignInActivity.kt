@@ -2,6 +2,7 @@ package com.hienthai.tungkinhonline
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
@@ -50,6 +51,7 @@ class SignInActivity : AppCompatActivity() {
                                     binding.pbLoading.isInvisible = true
                                     prefs.remember = binding.cbRemember.isChecked
                                     prefs.id = user.id ?: ""
+                                    prefs.username = user.username ?: ""
                                     startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                                         putExtra("USER_ID", user.id)
                                     })
@@ -90,10 +92,16 @@ class SignInActivity : AppCompatActivity() {
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.hasChild(prefs.id)) {
-                    binding.pbLoadingAutoLogin.isVisible = false
+                    binding.ctAutoLogin.isVisible = false
                     return
                 } else {
                     if (prefs.remember) {
+                        if (dataSnapshot.exists()) {
+                            for (userSnapshot in dataSnapshot.children) {
+                                val user = userSnapshot.getValue(User::class.java)
+                                prefs.username = user?.username ?: ""
+                            }
+                        }
                         binding.ctAutoLogin.isVisible = false
                         startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                             putExtra("USER_ID", prefs.id)
@@ -105,7 +113,7 @@ class SignInActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-
+                Log.e("Hien", "onCancelled: ", )
             }
         })
     }

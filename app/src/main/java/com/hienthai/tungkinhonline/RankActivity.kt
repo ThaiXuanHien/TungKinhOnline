@@ -11,10 +11,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivityRankBinding
+import org.koin.android.ext.android.inject
 
 class RankActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRankBinding
     private val adapter by lazy { RankAdapter() }
+    private val prefs: AppPrefs by inject()
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
     private val listUser = arrayListOf<User>()
@@ -47,7 +49,8 @@ class RankActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     for (userSnapshot in dataSnapshot.children) {
                         val user = userSnapshot.getValue(User::class.java)
-                        listUser.add(user ?: User())
+                        user?.copy(myPosition = user.username == prefs.username)
+                            ?.let { listUser.add(it) }
                     }
                     adapter.submitList(listUser.sortedByDescending { it.count })
                 }

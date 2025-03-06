@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.imgGoChuong.setSafeClickListener(interval = 10000) {
+        binding.imgGoChuong.setSafeClickListener(interval = 5000) {
             startAudioAnimation(exoPlayer3, mediaItem3, it, Techniques.Swing, 100)
         }
 
