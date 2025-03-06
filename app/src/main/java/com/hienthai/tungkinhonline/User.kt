@@ -5,4 +5,5 @@ data class User(
     val username: String? = null,
     val password: String? = null,
     val count: Long? = null,
+    val myPosition: Boolean? = false,
 )
