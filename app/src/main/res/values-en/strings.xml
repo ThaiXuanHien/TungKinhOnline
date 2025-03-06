@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">ChantOnline</string>
     <string name="text_rank">Rank</string>
     <string name="text_number">Number</string>
     <string name="text_username">Username</string>
@@ -20,4 +21,11 @@
     <string name="text_content_logout">Logging out will lose all points.</string>
     <string name="text_accept">Accept</string>
     <string name="text_deny">Cancel</string>
+    <string name="text_tutorial">Tutorial</string>
+    <string name="text_my_point">Point: </string>
+    <string name="text_daily_point">Daily: </string>
+    <string name="text_out_of_point">You have run out of daily points</string>
+    <string name="text_feature_developing">Tính năng đang phát triển</string>
+    <string name="text_tutorial_content">Every day you get 20 points, you will use that point to knock the wooden fish, the number of points you get will be ranked:\n\n100 points: bronze\n1000 points: silver\n5000 points: gold\n10000 points: platinum\n20000 points: diamond\n30000 points: veteran\n50000 points: master\n70000 points: fighter\n100000 points: war general\n1000000 points: light of veda\n\nEach time you watch an ad you will receive 100 points (this feature is under development, please wait)</string>
+    <string name="text_not_showing_today">Not showing today</string>
 </resources>

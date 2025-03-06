@@ -59,4 +59,7 @@ dependencies {
 
     // DI
     implementation 'io.insert-koin:koin-android:3.3.2'
+
+    // ads
+//    implementation("com.google.android.gms:play-services-ads:24.0.0")
 }

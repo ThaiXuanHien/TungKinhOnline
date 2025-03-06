@@ -20,4 +20,11 @@
     <string name="text_content_logout">Đăng xuất sẽ mất hết điểm</string>
     <string name="text_accept">Đồng ý</string>
     <string name="text_deny">Ở lại</string>
+    <string name="text_tutorial">Hướng dẫn</string>
+    <string name="text_my_point">Điểm: </string>
+    <string name="text_daily_point">Hằng ngày: </string>
+    <string name="text_out_of_point">Bạn đã hết điểm hằng ngày</string>
+    <string name="text_feature_developing">Tính năng đang phát triển</string>
+    <string name="text_tutorial_content">Mỗi ngày bạn nhận được 20 điểm, bạn sẽ dùng điểm đó để gõ mõ, số điểm gõ mõ bạn có được sẽ được xếp hạng:\n\n100 điểm: đồng\n1000 điểm: bạc\n5000 điểm: vàng\n10000 điểm: bạch kim\n20000 điểm: Kim cương\n30000 điểm : tinh anh\n50000 điểm: cao thủ\n70000 điểm: đại cao thủ\n100000 điểm: chiến tướng\n1000000 điểm: tinh linh ánh sáng\n\nMỗi lần xem quảng cáo bạn sẽ nhận được 100 điểm (tính năng này đang phát triển, bạn vui lòng chờ nhé)</string>
+    <string name="text_not_showing_today">không hiển thị ngày hôm nay</string>
 </resources>

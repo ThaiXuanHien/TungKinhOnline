@@ -1,12 +1,16 @@
 package com.hienthai.tungkinhonline
 
+import android.app.Dialog
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.daimajia.androidanimations.library.Techniques
@@ -17,6 +21,7 @@ import com.google.android.exoplayer2.util.MimeTypes
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.hienthai.tungkinhonline.databinding.ActivityMainBinding
+import com.hienthai.tungkinhonline.databinding.DialogTutorialBinding
 import com.skydoves.powermenu.OnMenuItemClickListener
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
@@ -52,13 +57,19 @@ class MainActivity : AppCompatActivity() {
         val mediaItem3 = initMediaItem(R.raw.chuong)
 
         binding.tvCount.text = prefs.count.toString()
+        binding.tvDailyPoint.text = prefs.dailyPoint.toString()
 
         binding.imgGoMo.setSafeClickListener {
+            if (prefs.dailyPoint == 0) {
+                Toast.makeText(this, getString(R.string.text_out_of_point), Toast.LENGTH_SHORT).show()
+                return@setSafeClickListener
+            }
             prefs.count = ++prefs.count
+            prefs.dailyPoint -= 1
             binding.tvCount.text = "${prefs.count}"
+            binding.tvDailyPoint.text = "${prefs.dailyPoint}"
             databaseReference.child(intent.getStringExtra("USER_ID") ?: "").child("count").setValue(prefs.count)
             startAudioAnimation(exoPlayer2, mediaItem2, it, Techniques.Pulse, 200)
-
         }
 
         binding.imgGoChuong.setSafeClickListener(interval = 5000) {
@@ -69,7 +80,32 @@ class MainActivity : AppCompatActivity() {
             powerMenu.showAsDropDown(it)
         }
 
+        binding.imgWatchAd.setSafeClickListener {
+            Toast.makeText(this, getString(R.string.text_feature_developing), Toast.LENGTH_SHORT).show()
+        }
+
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        if (prefs.notShowingToday.not()) {
+            showTutorialDialog(this)
+        }
+    }
+
+    private fun showTutorialDialog(context: Context) {
+        val dialog = Dialog(context)
+
+        val binding = DialogTutorialBinding.inflate(LayoutInflater.from(context))
+        dialog.setContentView(binding.root)
+
+        binding.tvOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        binding.cbNotShowingToday.setOnCheckedChangeListener { _, isChecked ->
+            prefs.notShowingToday = isChecked
+        }
+
+        dialog.show()
     }
 
     private fun initMenu() {
@@ -94,15 +130,9 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this@MainActivity, RankActivity::class.java))
                 }
                 1 -> {
-                    showAlertDialog(
-                        msg = getString(R.string.text_content_logout),
-                        positiveButton = getString(R.string.text_accept),
-                        negativeButton = getString(R.string.text_deny),
-                        onPositiveButtonClick = {
-                            startActivity(Intent(this@MainActivity, SignInActivity::class.java))
-                            prefs.clear()
-                            finish()
-                        }, onNegativeButtonClick = {})
+                    startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                    prefs.clear()
+                    finish()
                 }
             }
             powerMenu.dismiss()
@@ -157,6 +187,8 @@ class MainActivity : AppCompatActivity() {
                 positiveButton = getString(R.string.text_down_the_mountain),
                 negativeButton = getString(R.string.text_continue_practicing),
                 onPositiveButtonClick = {
+                    startActivity(Intent(this@MainActivity, SignInActivity::class.java))
+                    prefs.clear()
                     finish()
                 }, onNegativeButtonClick = {})
         }
