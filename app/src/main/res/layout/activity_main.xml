@@ -15,29 +15,84 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/tv_count"
+            android:id="@+id/tv_title_daily_point"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:text="@string/text_daily_point"
+            android:textColor="#AE5D4A"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_daily_point"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="0"
             android:textColor="#AE5D4A"
-            android:textSize="40sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/img_more" />
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_title_daily_point"
+            app:layout_constraintTop_toTopOf="@+id/tv_title_daily_point" />
+
+        <TextView
+            android:id="@+id/tv_title_my_point"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_my_point"
+            android:textColor="#AE5D4A"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_count"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#AE5D4A"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_watch_ad"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/img_more"
-            android:src="@drawable/ic_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:padding="8dp"
+            android:src="@drawable/ic_more"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/img_watch_ad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_watch_ad_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_more"
+            app:layout_constraintTop_toTopOf="parent">
 
         </ImageView>
 
@@ -62,10 +117,10 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:src="@drawable/mo"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_phat_to">
+        app:layout_constraintTop_toBottomOf="@+id/img_phat_to"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.5">
 
     </ImageView>
 
@@ -73,13 +128,13 @@
         android:id="@+id/img_go_chuong"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:src="@drawable/chuong"
-        android:adjustViewBounds="true"
         android:layout_marginTop="40dp"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5"
+        android:adjustViewBounds="true"
+        android:src="@drawable/chuong"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_phat_to">
+        app:layout_constraintTop_toBottomOf="@+id/img_phat_to"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.5">
 
     </ImageView>
 

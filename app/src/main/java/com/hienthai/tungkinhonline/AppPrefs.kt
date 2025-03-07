@@ -10,10 +10,12 @@ class AppPrefs(context: Context) {
     var id: String by prefs.preferences("id", "")
     var language: String by prefs.preferences("language", "vi_VN")
     var username: String by prefs.preferences("username", "")
+    var dailyPoint: Int by prefs.preferences("dailyPoint", 20)
+    var lastDate: String by prefs.preferences("lastDate", "")
+    var notShowingToday: Boolean by prefs.preferences("notShowingToday", false)
 
     fun clear() {
         prefs.edit()
-            .remove("count")
             .remove("remember")
             .remove("id")
             .apply()

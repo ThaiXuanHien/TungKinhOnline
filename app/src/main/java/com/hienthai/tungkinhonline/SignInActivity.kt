@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivitySignInBinding
 import org.koin.android.ext.android.inject
+import java.util.Date
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
@@ -95,13 +96,19 @@ class SignInActivity : AppCompatActivity() {
                     binding.ctAutoLogin.isVisible = false
                     return
                 } else {
-                    if (prefs.remember) {
-                        if (dataSnapshot.exists()) {
-                            for (userSnapshot in dataSnapshot.children) {
-                                val user = userSnapshot.getValue(User::class.java)
-                                prefs.username = user?.username ?: ""
-                            }
+                    if (dataSnapshot.exists()) {
+                        for (userSnapshot in dataSnapshot.children) {
+                            val user = userSnapshot.getValue(User::class.java)
+                            prefs.username = user?.username ?: ""
+                            prefs.count = user?.count ?: 0L
                         }
+                    }
+                    val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
+                    if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
+                        prefs.dailyPoint = 20
+                        prefs.lastDate = currentDate
+                    }
+                    if (prefs.remember) {
                         binding.ctAutoLogin.isVisible = false
                         startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                             putExtra("USER_ID", prefs.id)

@@ -20,4 +20,23 @@
     <string name="text_content_logout">Đăng xuất sẽ mất hết điểm</string>
     <string name="text_accept">Đồng ý</string>
     <string name="text_deny">Ở lại</string>
+    <string name="text_tutorial">Hướng dẫn</string>
+    <string name="text_my_point">Điểm: </string>
+    <string name="text_daily_point">Hằng ngày: </string>
+    <string name="text_out_of_point">Bạn đã hết điểm hằng ngày</string>
+    <string name="text_feature_developing">Tính năng đang phát triển</string>
+    <string name="text_tutorial_content">Mỗi ngày bạn nhận được 20 điểm, bạn sẽ dùng điểm đó để gõ mõ, số điểm gõ mõ bạn có được sẽ được xếp hạng:\n\n100 điểm: Đồng\n1000 điểm: Bạc\n5000 điểm: Vàng\n10000 điểm: Bạch kim\n20000 điểm: Kim cương\n30000 điểm : Tinh anh\n50000 điểm: Cao thủ\n70000 điểm: Đại cao thủ\n100000 điểm: Thách đấu\n500000 điểm: Chiến tướng\n1000000 điểm: Tinh linh ánh sáng\n\nMỗi lần xem quảng cáo bạn sẽ nhận được 100 điểm (tính năng này đang phát triển, bạn vui lòng chờ nhé...)</string>
+    <string name="text_not_showing_today">không hiển thị ngày hôm nay</string>
+    <string name="text_rank_bronze">Đ</string>
+    <string name="text_rank_silver">B</string>
+    <string name="text_rank_gold">V</string>
+    <string name="text_rank_platinum">BK</string>
+    <string name="text_rank_diamond">KC</string>
+    <string name="text_rank_veteran">TA</string>
+    <string name="text_rank_master">CT</string>
+    <string name="text_rank_fighter">ĐCT</string>
+    <string name="text_rank_gage">TĐ</string>
+    <string name="text_rank_war_general">CHT</string>
+    <string name="text_rank_light_of_veda">TLAS</string>
+    <string name="text_un_rank">0 Hạng</string>
 </resources>
