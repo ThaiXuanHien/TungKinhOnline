@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,13 @@ import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.hienthai.tungkinhonline.databinding.ActivityMainBinding
@@ -25,6 +33,9 @@ import com.hienthai.tungkinhonline.databinding.DialogTutorialBinding
 import com.skydoves.powermenu.OnMenuItemClickListener
 import com.skydoves.powermenu.PowerMenu
 import com.skydoves.powermenu.PowerMenuItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.io.File
 
@@ -39,11 +50,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var powerMenu: PowerMenu
 
+    private var rewardedAd: RewardedAd? = null
+    private val adUnitId = "ca-app-pub-9207898971714644/1484763633"
+    private val backgroundScope = CoroutineScope(Dispatchers.IO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        backgroundScope.launch {
+            MobileAds.initialize(this@MainActivity) {}
+        }
+
+        loadRewardedAd()
 
         initMenu()
 
@@ -61,14 +82,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.imgGoMo.setSafeClickListener {
             if (prefs.dailyPoint == 0) {
-                Toast.makeText(this, getString(R.string.text_out_of_point), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.text_out_of_point), Toast.LENGTH_SHORT)
+                    .show()
                 return@setSafeClickListener
             }
             prefs.count = ++prefs.count
             prefs.dailyPoint -= 1
             binding.tvCount.text = "${prefs.count}"
             binding.tvDailyPoint.text = "${prefs.dailyPoint}"
-            databaseReference.child(intent.getStringExtra("USER_ID") ?: "").child("count").setValue(prefs.count)
+            databaseReference.child(intent.getStringExtra("USER_ID") ?: "").child("count")
+                .setValue(prefs.count)
             startAudioAnimation(exoPlayer2, mediaItem2, it, Techniques.Pulse, 200)
         }
 
@@ -81,13 +104,78 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.imgWatchAd.setSafeClickListener {
-            Toast.makeText(this, getString(R.string.text_feature_developing), Toast.LENGTH_SHORT).show()
+            showRewardedAd()
         }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         if (prefs.notShowingToday.not()) {
             showTutorialDialog(this)
+        }
+    }
+
+    private fun loadRewardedAd() {
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(this, adUnitId, adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.text_load_ad_fail),
+                    Toast.LENGTH_SHORT
+                ).show()
+                rewardedAd = null
+
+            }
+
+            override fun onAdLoaded(ad: RewardedAd) {
+                rewardedAd = ad
+                rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                    override fun onAdClicked() {
+                        // Called when a click is recorded for an ad.
+                        prefs.count += 200
+                        binding.tvCount.text = "${prefs.count}"
+                        databaseReference.child(intent.getStringExtra("USER_ID") ?: "")
+                            .child("count").setValue(prefs.count)
+                    }
+
+                    override fun onAdDismissedFullScreenContent() {
+                        // Called when ad is dismissed.
+                        // Set the ad reference to null so you don't show the ad a second time.
+                        rewardedAd = null
+                        loadRewardedAd()
+
+                    }
+
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                        super.onAdFailedToShowFullScreenContent(p0)
+                        rewardedAd = null
+                    }
+
+                    override fun onAdImpression() {
+                        // Called when an impression is recorded for an ad.
+                    }
+
+                    override fun onAdShowedFullScreenContent() {
+                        // Called when ad is shown.
+
+                    }
+                }
+                Log.d("AdMob", "Rewarded Ad Loaded.")
+            }
+        })
+    }
+
+    private fun showRewardedAd() {
+        rewardedAd?.let { ad ->
+            ad.show(this) { _ ->
+                prefs.count += 100
+                binding.tvCount.text = "${prefs.count}"
+                databaseReference.child(intent.getStringExtra("USER_ID") ?: "").child("count")
+                    .setValue(prefs.count)
+            }
+        } ?: run {
+            Toast.makeText(this, getString(R.string.text_no_ads), Toast.LENGTH_SHORT).show()
+            loadRewardedAd()
         }
     }
 
@@ -125,10 +213,11 @@ class MainActivity : AppCompatActivity() {
     private val onMenuItemClickListener: OnMenuItemClickListener<PowerMenuItem> =
         OnMenuItemClickListener<PowerMenuItem> { position, item ->
             powerMenu.selectedPosition = position
-            when(position) {
+            when (position) {
                 0 -> {
                     startActivity(Intent(this@MainActivity, RankActivity::class.java))
                 }
+
                 1 -> {
                     startActivity(Intent(this@MainActivity, SignInActivity::class.java))
                     prefs.clear()
@@ -144,7 +233,7 @@ class MainActivity : AppCompatActivity() {
         mediaItem: MediaItem,
         view: View,
         animation: Techniques,
-        duration: Long
+        duration: Long,
     ) {
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
