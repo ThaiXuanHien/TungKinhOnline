@@ -39,6 +39,6 @@
     <string name="text_rank_war_general">CHT</string>
     <string name="text_rank_light_of_veda">TLAS</string>
     <string name="text_un_rank">0 Hạng</string>
-    <string name="text_no_ads">Hiện tại không có quảng cáo</string>
+    <string name="text_no_ads">Quảng cáo sẽ có sau 10s</string>
     <string name="text_load_ad_fail">Không tải được quảng cáo có thưởng</string>
 </resources>

@@ -95,32 +95,32 @@ class SignInActivity : AppCompatActivity() {
                 if (!dataSnapshot.hasChild(prefs.id)) {
                     binding.ctAutoLogin.isVisible = false
                     return
+                }
+
+                val userSnapshot = dataSnapshot.child(prefs.id)
+                val user = userSnapshot.getValue(User::class.java)
+
+                prefs.username = user?.username ?: ""
+                prefs.count = user?.count ?: 0L
+
+                val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
+                if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
+                    prefs.dailyPoint = 20
+                    prefs.lastDate = currentDate
+                }
+
+                if (prefs.remember) {
+                    binding.ctAutoLogin.isVisible = false
+                    startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
+                        putExtra("USER_ID", prefs.id)
+                    })
                 } else {
-                    if (dataSnapshot.exists()) {
-                        for (userSnapshot in dataSnapshot.children) {
-                            val user = userSnapshot.getValue(User::class.java)
-                            prefs.username = user?.username ?: ""
-                            prefs.count = user?.count ?: 0L
-                        }
-                    }
-                    val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
-                    if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
-                        prefs.dailyPoint = 20
-                        prefs.lastDate = currentDate
-                    }
-                    if (prefs.remember) {
-                        binding.ctAutoLogin.isVisible = false
-                        startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
-                            putExtra("USER_ID", prefs.id)
-                        })
-                    } else {
-                        binding.ctAutoLogin.isVisible = false
-                    }
+                    binding.ctAutoLogin.isVisible = false
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("Hien", "onCancelled: ", )
+                Log.e("Hien", "onCancelled: ${databaseError.message}")
             }
         })
     }

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">ChantOnline</string>
     <string name="text_rank">Rank</string>
-    <string name="text_number">Number</string>
+    <string name="text_number">Num</string>
     <string name="text_username">Username</string>
     <string name="text_count">Count</string>
     <string name="text_sign_in">Sign In</string>
@@ -25,7 +25,7 @@
     <string name="text_my_point">Point: </string>
     <string name="text_daily_point">Daily: </string>
     <string name="text_out_of_point">You have run out of daily points</string>
-    <string name="text_feature_developing">Tính năng đang phát triển</string>
+    <string name="text_feature_developing">Feature in development</string>
     <string name="text_tutorial_content">Every day you get 20 points, you will use that point to knock the wooden fish, the number of points you get will be ranked:\n\n100 points: Bronze\n1000 points: Silver\n5000 points: Gold\n10000 points: Platinum\n20000 points: Diamond\n30000 points: Veteran\n50000 points: Master\n70000 points: Fighter\n100000 points: Gage\n500000 points: War general\n1000000 points: Light of veda\n\nEach time you watch an ad you will receive 100 points, Each time you click an ad you will receive 200 points.</string>
     <string name="text_not_showing_today">Not showing today</string>
     <string name="text_rank_bronze">Bronze</string>
@@ -40,6 +40,6 @@
     <string name="text_rank_war_general">WG</string>
     <string name="text_rank_light_of_veda">LOV</string>
     <string name="text_un_rank">UnRanked</string>
-    <string name="text_no_ads">There are currently no ads.</string>
+    <string name="text_no_ads">Ad will be available after 10s</string>
     <string name="text_load_ad_fail">Failed to load rewarded ad</string>
 </resources>
