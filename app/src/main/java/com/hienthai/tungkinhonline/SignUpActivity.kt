@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.hienthai.tungkinhonline.databinding.ActivitySignupBinding
 import org.koin.android.ext.android.inject
+import java.util.Date
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -41,7 +42,17 @@ class SignUpActivity : AppCompatActivity() {
                             if (!dataSnapshot.exists()) {
                                 binding.pbLoading.isInvisible = true
                                 val id = databaseReference.push().key
-                                val user = User(id, username, password, 0)
+                                val user = User(
+                                    id = id,
+                                    username = username,
+                                    password = password,
+                                    count = 0,
+                                    registerTime = DateUtil.convertDateToTime(
+                                        Date(),
+                                        TimeFormat.YYYYMMDD
+                                    )
+                                )
+                                prefs.dayRegister = 0
                                 databaseReference.child(id ?: "").setValue(user)
                                 prefs.id = id ?: ""
                                 val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
