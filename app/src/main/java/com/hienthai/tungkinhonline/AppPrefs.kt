@@ -13,6 +13,7 @@ class AppPrefs(context: Context) {
     var dailyPoint: Int by prefs.preferences("dailyPoint", 20)
     var lastDate: String by prefs.preferences("lastDate", "")
     var notShowingToday: Boolean by prefs.preferences("notShowingToday", false)
+    var dayRegister: Int by prefs.preferences("dayRegister", 20)
 
     fun clear() {
         prefs.edit()

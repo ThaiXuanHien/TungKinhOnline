@@ -6,4 +6,5 @@ data class User(
     val password: String? = null,
     val count: Long? = null,
     val myPosition: Boolean? = false,
+    val registerTime: String? = null
 )

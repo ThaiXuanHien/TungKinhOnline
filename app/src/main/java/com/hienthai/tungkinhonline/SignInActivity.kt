@@ -53,6 +53,16 @@ class SignInActivity : AppCompatActivity() {
                                     prefs.remember = binding.cbRemember.isChecked
                                     prefs.id = user.id ?: ""
                                     prefs.username = user.username ?: ""
+
+                                    val currentTime = DateUtil.convertDateToTime(
+                                        Date(),
+                                        TimeFormat.YYYYMMDD
+                                    )
+                                    val userRef = userSnapshot.ref
+                                    userRef.child("registerTime").setValue(currentTime)
+                                        .addOnSuccessListener {}
+                                        .addOnFailureListener {}
+
                                     startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                                         putExtra("USER_ID", user.id)
                                     })
@@ -102,6 +112,15 @@ class SignInActivity : AppCompatActivity() {
 
                 prefs.username = user?.username ?: ""
                 prefs.count = user?.count ?: 0L
+
+                val currentTime = DateUtil.convertDateToTime(
+                    Date(),
+                    TimeFormat.YYYYMMDD
+                )
+                val userRef = userSnapshot.ref
+                userRef.child("registerTime").setValue(currentTime)
+                    .addOnSuccessListener {}
+                    .addOnFailureListener {}
 
                 val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
                 if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
