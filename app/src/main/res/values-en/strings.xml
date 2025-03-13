@@ -42,4 +42,5 @@
     <string name="text_un_rank">UnRanked</string>
     <string name="text_no_ads">Ad will be available after 10s</string>
     <string name="text_load_ad_fail">Failed to load rewarded ad</string>
+    <string name="text_select_music">Select Music</string>
 </resources>
