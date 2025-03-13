@@ -53,15 +53,18 @@ class SignInActivity : AppCompatActivity() {
                                     prefs.remember = binding.cbRemember.isChecked
                                     prefs.id = user.id ?: ""
                                     prefs.username = user.username ?: ""
+                                    prefs.count = user.count ?: 0L
 
                                     val currentTime = DateUtil.convertDateToTime(
                                         Date(),
                                         TimeFormat.YYYYMMDD
                                     )
-                                    val userRef = userSnapshot.ref
-                                    userRef.child("registerTime").setValue(currentTime)
-                                        .addOnSuccessListener {}
-                                        .addOnFailureListener {}
+                                    for (userData in dataSnapshot.children) {
+                                        val userId = userData.key
+                                        if (!userId.isNullOrEmpty()) {
+                                            databaseReference.child(userId).updateChildren(mapOf("registerTime" to currentTime))
+                                        }
+                                    }
 
                                     startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                                         putExtra("USER_ID", user.id)
@@ -117,10 +120,12 @@ class SignInActivity : AppCompatActivity() {
                     Date(),
                     TimeFormat.YYYYMMDD
                 )
-                val userRef = userSnapshot.ref
-                userRef.child("registerTime").setValue(currentTime)
-                    .addOnSuccessListener {}
-                    .addOnFailureListener {}
+                for (userData in dataSnapshot.children) {
+                    val userId = userData.key
+                    if (!userId.isNullOrEmpty()) {
+                        databaseReference.child(userId).updateChildren(mapOf("registerTime" to currentTime))
+                    }
+                }
 
                 val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
                 if (prefs.lastDate == "" || prefs.lastDate != currentDate) {

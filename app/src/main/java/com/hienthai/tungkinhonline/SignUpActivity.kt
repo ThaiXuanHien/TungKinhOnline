@@ -52,7 +52,7 @@ class SignUpActivity : AppCompatActivity() {
                                         TimeFormat.YYYYMMDD
                                     )
                                 )
-                                prefs.dayRegister = 0
+
                                 databaseReference.child(id ?: "").setValue(user)
                                 prefs.id = id ?: ""
                                 val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
