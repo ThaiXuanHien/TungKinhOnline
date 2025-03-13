@@ -61,7 +61,6 @@
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="24dp"
             android:gravity="center"
             android:text="0"
             android:textColor="#AE5D4A"
