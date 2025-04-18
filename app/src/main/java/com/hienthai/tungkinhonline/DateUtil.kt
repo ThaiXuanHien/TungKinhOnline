@@ -26,4 +26,5 @@ object DateUtil {
 
 object TimeFormat {
     const val YYYYMMDD = "yyyyMMdd"
+    const val YYYYMMDDHHMM = "yyyyMMdd : hh:mm"
 }

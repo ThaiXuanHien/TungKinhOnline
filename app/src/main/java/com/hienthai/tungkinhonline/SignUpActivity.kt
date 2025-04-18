@@ -41,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (!dataSnapshot.exists()) {
                                 binding.pbLoading.isInvisible = true
-                                val id = databaseReference.push().key
+                                val id = databaseReference.push().key ?: return
                                 val user = User(
                                     id = id,
                                     username = username,
@@ -49,12 +49,12 @@ class SignUpActivity : AppCompatActivity() {
                                     count = 0,
                                     registerTime = DateUtil.convertDateToTime(
                                         Date(),
-                                        TimeFormat.YYYYMMDD
+                                        TimeFormat.YYYYMMDDHHMM
                                     )
                                 )
 
-                                databaseReference.child(id ?: "").setValue(user)
-                                prefs.id = id ?: ""
+                                databaseReference.child(id).setValue(user)
+                                prefs.id = id
                                 val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
                                 startActivity(intent)
                                 finish()
