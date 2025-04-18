@@ -55,17 +55,6 @@ class SignInActivity : AppCompatActivity() {
                                     prefs.username = user.username ?: ""
                                     prefs.count = user.count ?: 0L
 
-                                    val currentTime = DateUtil.convertDateToTime(
-                                        Date(),
-                                        TimeFormat.YYYYMMDD
-                                    )
-                                    for (userData in dataSnapshot.children) {
-                                        val userId = userData.key
-                                        if (!userId.isNullOrEmpty()) {
-                                            databaseReference.child(userId).updateChildren(mapOf("registerTime" to currentTime))
-                                        }
-                                    }
-
                                     startActivity(Intent(this@SignInActivity, MainActivity::class.java).apply {
                                         putExtra("USER_ID", user.id)
                                     })
@@ -116,18 +105,8 @@ class SignInActivity : AppCompatActivity() {
                 prefs.username = user?.username ?: ""
                 prefs.count = user?.count ?: 0L
 
-                val currentTime = DateUtil.convertDateToTime(
-                    Date(),
-                    TimeFormat.YYYYMMDD
-                )
-                for (userData in dataSnapshot.children) {
-                    val userId = userData.key
-                    if (!userId.isNullOrEmpty()) {
-                        databaseReference.child(userId).updateChildren(mapOf("registerTime" to currentTime))
-                    }
-                }
 
-                val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDD)
+                val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDDHHMM)
                 if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
                     prefs.dailyPoint = 20
                     prefs.lastDate = currentDate
