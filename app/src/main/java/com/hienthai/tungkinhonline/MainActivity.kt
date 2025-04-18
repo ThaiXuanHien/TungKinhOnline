@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     private var rewardedAd: RewardedAd? = null
     private val adUnitId = "ca-app-pub-9207898971714644/1484763633"
     private val backgroundScope = CoroutineScope(Dispatchers.IO)
+    private var player: ExoPlayer? = null
+    private var lastUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -199,6 +202,7 @@ class MainActivity : AppCompatActivity() {
     private fun initMenu() {
         powerMenu = PowerMenu.Builder(this)
             .addItem(PowerMenuItem(getString(R.string.text_rank)))
+            .addItem(PowerMenuItem(getString(R.string.text_select_music)))
             .addItem(PowerMenuItem(getString(R.string.text_log_out)))
             .setMenuRadius(10f)
             .setMenuShadow(10f)
@@ -219,6 +223,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 1 -> {
+                    openMusicPicker()
+                }
+
+                2 -> {
                     startActivity(Intent(this@MainActivity, SignInActivity::class.java))
                     prefs.clear()
                     finish()
@@ -227,6 +235,30 @@ class MainActivity : AppCompatActivity() {
             powerMenu.dismiss()
 
         }
+
+    private fun openMusicPicker() {
+        pickAudioLauncher.launch("audio/*")
+    }
+
+    private val pickAudioLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
+            result?.let { playMusic(it) }
+        }
+
+    private fun playMusic(uri: Uri) {
+        lastUri = uri
+        player?.release()
+        player = null
+
+        player = ExoPlayer.Builder(this)
+            .build()
+            .apply {
+                val mediaItem = MediaItem.fromUri(uri)
+                setMediaItem(mediaItem)
+                playWhenReady = true
+                prepare()
+            }
+    }
 
     private fun startAudioAnimation(
         exoPlayer: ExoPlayer,
@@ -267,6 +299,28 @@ class MainActivity : AppCompatActivity() {
             )
             .setMimeType(MimeTypes.AUDIO_WAV)
             .build()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lastUri?.let {
+            if (player == null) {
+                playMusic(it)
+            } else {
+                player?.play()
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        player?.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player?.release()
+        player = null
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
