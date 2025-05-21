@@ -33,7 +33,14 @@ class SignUpActivity : AppCompatActivity() {
             val username = binding.edtUsername.text.toString()
             val password = binding.edtPassword.text.toString()
             val rePassword = binding.edtRePassword.text.toString()
-
+            if (username.contains("\\s".toRegex()) || password.contains("\\s".toRegex())) {
+                Toast.makeText(this, getString(R.string.text_no_whitespace_allowed), Toast.LENGTH_SHORT).show()
+                return@setSafeClickListener
+            }
+            if (containsVietnameseAccent(username) || containsVietnameseAccent(password)) {
+                Toast.makeText(this, getString(R.string.text_no_vietnamese_accent_allowed), Toast.LENGTH_SHORT).show()
+                return@setSafeClickListener
+            }
             if (username.isNotEmpty() && password.isNotEmpty() && rePassword.isNotEmpty()) {
                 if (password == rePassword) {
                     binding.pbLoading.isInvisible = false
@@ -87,5 +94,17 @@ class SignUpActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
+    }
+
+    private fun containsVietnameseAccent(input: String): Boolean {
+        val vietnameseRegex = Regex(
+            "[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệ" +
+                    "ìíỉĩịòóỏõọôồốổỗộơờớởỡợ" +
+                    "ùúủũụưừứửữựỳýỷỹỵđ" +
+                    "ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆ" +
+                    "ÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢ" +
+                    "ÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ]"
+        )
+        return vietnameseRegex.containsMatchIn(input)
     }
 }
