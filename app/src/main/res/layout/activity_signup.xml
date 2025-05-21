@@ -38,6 +38,9 @@
                 android:id="@+id/edt_username"
                 android:textColor="@color/black"
                 android:hint="@string/text_username"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -56,6 +59,9 @@
                 android:id="@+id/edt_password"
                 android:textColor="@color/black"
                 android:hint="@string/text_password"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -73,6 +79,9 @@
                 android:inputType="textPassword"
                 android:id="@+id/edt_re_password"
                 android:textColor="@color/black"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:hint="@string/text_re_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

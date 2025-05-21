@@ -50,7 +50,7 @@ class SignInActivity : AppCompatActivity() {
                                 val user = userSnapshot.getValue(User::class.java)
                                 if (user != null && user.password == password) {
                                     binding.pbLoading.isInvisible = true
-                                    prefs.remember = binding.cbRemember.isChecked
+                                    prefs.remember = true
                                     prefs.id = user.id ?: ""
                                     prefs.username = user.username ?: ""
                                     prefs.count = user.count ?: 0L

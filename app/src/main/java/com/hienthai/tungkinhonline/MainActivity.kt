@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlayer
@@ -287,15 +288,13 @@ class MainActivity : AppCompatActivity() {
     private fun initMediaItem(raw: Int): MediaItem {
         return MediaItem.Builder()
             .setUri(
-                Uri.parse(
-                    ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            File.pathSeparator +
-                            File.separator +
-                            File.separator +
-                            applicationContext.packageName +
-                            File.separator +
-                            raw
-                )
+                (ContentResolver.SCHEME_ANDROID_RESOURCE +
+                        File.pathSeparator +
+                        File.separator +
+                        File.separator +
+                        applicationContext.packageName +
+                        File.separator +
+                        raw).toUri()
             )
             .setMimeType(MimeTypes.AUDIO_WAV)
             .build()
