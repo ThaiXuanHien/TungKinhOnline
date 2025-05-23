@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -22,7 +23,10 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
@@ -53,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var powerMenu: PowerMenu
 
     private var rewardedAd: RewardedAd? = null
-    private val adUnitId = "ca-app-pub-9207898971714644/1484763633"
+    private val rewardAdUnitId = "ca-app-pub-9207898971714644/1484763633"
+    private val bannerAdUnitId = "ca-app-pub-9207898971714644/7901377994"
     private val backgroundScope = CoroutineScope(Dispatchers.IO)
     private var player: ExoPlayer? = null
     private var lastUri: Uri? = null
@@ -69,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadRewardedAd()
+        loadBannerAd()
 
         initMenu()
 
@@ -120,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadRewardedAd() {
         val adRequest = AdRequest.Builder().build()
-        RewardedAd.load(this, adUnitId, adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(this, rewardAdUnitId, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 Toast.makeText(
                     this@MainActivity,
@@ -181,6 +187,63 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.text_no_ads), Toast.LENGTH_SHORT).show()
             loadRewardedAd()
         }
+    }
+
+    private fun loadBannerAd() {
+        val adView = AdView(this)
+        adView.adUnitId = bannerAdUnitId
+        adView.setAdSize(getBannerAdSize())
+        binding.adView.removeAllViews()
+        binding.adView.addView(adView)
+
+        adView.adListener = object: AdListener() {
+            override fun onAdClicked() {
+                prefs.count += 200
+                binding.tvCount.text = "${prefs.count}"
+                databaseReference.child(intent.getStringExtra("USER_ID") ?: "")
+                    .child("count").setValue(prefs.count)
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+            }
+
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+        }
+
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+    }
+
+    private fun getBannerAdSize() : AdSize {
+        val displayMetrics = resources.displayMetrics
+        var adWidthPixels = displayMetrics.widthPixels
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            val bounds = windowMetrics.bounds
+            adWidthPixels = bounds.width()
+        }
+        val density = displayMetrics.density
+        val adWidth = (adWidthPixels / density).toInt()
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
+
     }
 
     private fun showTutorialDialog(context: Context) {
