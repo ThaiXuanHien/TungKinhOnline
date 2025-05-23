@@ -108,7 +108,7 @@ class SignInActivity : AppCompatActivity() {
 
                 val currentDate = DateUtil.convertDateToTime(Date(), TimeFormat.YYYYMMDDHHMM)
                 if (prefs.lastDate == "" || prefs.lastDate != currentDate) {
-                    prefs.dailyPoint = 50
+                    prefs.dailyPoint = 200
                     prefs.lastDate = currentDate
                 }
 
