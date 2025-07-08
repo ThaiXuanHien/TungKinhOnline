@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InsetsLayout">
+        <attr name="insetsType">
+            <flag name="statusBars" value="1" />
+            <flag name="navigationBars" value="2" />
+            <flag name="captionBar" value="4" />
+            <flag name="ime" value="8" />
+            <flag name="systemGestures" value="16" />
+            <flag name="mandatorySystemGestures" value="32" />
+            <flag name="tappableElement" value="64" />
+            <flag name="displayCutout" value="128" />
+            <flag name="systemBars" value="7" />
+        </attr>
+
+        <attr name="insetsPadding">
+            <flag name="top" value="1" />
+            <flag name="left" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+
+        <attr name="ignoringVisibility" format="boolean" />
+    </declare-styleable>
+</resources>
